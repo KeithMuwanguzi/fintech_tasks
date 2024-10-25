@@ -78,17 +78,17 @@ def main():
                 email = input("Enter user email: ")
                 user_system.add_user(id, name, email)
             case '2':
-                id = int(input("Enter user ID to get: "))
+                id = input("Enter user ID to get: ")
                 user = user_system.get_user_by_id(id)
                 if user:
                     print(f"User found - ID: {user.id}, Name: {user.name}, Email: {user.email}")
             case '3':
-                id = int(input("Enter user ID to update: "))
+                id = input("Enter user ID to update: ")
                 name = input("Enter new name (leave blank to keep current): ")
                 email = input("Enter new email (leave blank to keep current): ")
                 user_system.update_user(id, name if name else None, email if email else None)
             case '4':
-                id = int(input("Enter user ID to delete: "))
+                id = input("Enter user ID to delete: ")
                 user_system.delete_user(id)
             case '5':
                 if len(user_system.users) != 0:
