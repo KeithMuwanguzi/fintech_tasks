@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 /** Muwanguzi Keith Jonathan
  *  BankAccount class implemented with Java OOP
+ * To be able to bundle it, please first rename the file to BankAccount so that it can match with the public class name
  **/
 public class BankAccount {
     private String accountNumber;
