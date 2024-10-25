@@ -11,6 +11,16 @@ class UserManagementSystem:
         self.users = [] #This is the user List {Acting as our database}
 
     def add_user(self, id, name, email):
+        # Check if ID already exists
+        if any(user.id == id for user in self.users):
+            print(f"Error: User with ID {id} already exists.")
+            return
+
+        # Check if email already exists
+        if any(user.email == email for user in self.users):
+            print(f"Error: User with email {email} already exists.")
+            return
+
         user = User(id, name, email)
         self.users.append(user)
         print(f"User {name} added successfully.")
@@ -28,7 +38,11 @@ class UserManagementSystem:
             if name:
                 user.name = name
             if email:
-                user.email = email
+                # Check if email already exists for another user
+                if any(u.email == email and u.id != id for u in self.users):
+                    print(f"Error: User with email {email} already exists.")
+                else:
+                    user.email = email
             print(f"User with id {id} updated successfully.")
         else:
             print(f"Failed to update. User with id {id} not found.")
@@ -42,11 +56,53 @@ class UserManagementSystem:
             print(f"Failed to delete. User with id {id} not found.")
 
 # Usage
-user_system = UserManagementSystem()
+def main():
+    user_system = UserManagementSystem()
+    print("Welcome to the User Management System")
 
-# Add users
-user_system.add_user(1, "John Mukasa", "john@camtech.com")
-user_system.add_user(2, "Janeh Alupo", "jane@gmail.com")
+    while True:
+        print("\nPlease select an option:")
+        print("1. Add user")
+        print("2. Get user by ID")
+        print("3. Update user")
+        print("4. Delete user")
+        print("5. Print all users")
+        print("6. Exit")
 
-#Delete a user
-user_system.delete_user(5)
+        choice = input("Enter your choice (1-6): ")
+
+        match choice:
+            case '1':
+                id = input("Enter user ID: ")
+                name = input("Enter user name: ")
+                email = input("Enter user email: ")
+                user_system.add_user(id, name, email)
+            case '2':
+                id = int(input("Enter user ID to get: "))
+                user = user_system.get_user_by_id(id)
+                if user:
+                    print(f"User found - ID: {user.id}, Name: {user.name}, Email: {user.email}")
+            case '3':
+                id = int(input("Enter user ID to update: "))
+                name = input("Enter new name (leave blank to keep current): ")
+                email = input("Enter new email (leave blank to keep current): ")
+                user_system.update_user(id, name if name else None, email if email else None)
+            case '4':
+                id = int(input("Enter user ID to delete: "))
+                user_system.delete_user(id)
+            case '5':
+                if len(user_system.users) != 0:
+                    print("\nAll users:")
+                    for user in user_system.users:
+                        print(f"ID: {user.id}, Name: {user.name}, Email: {user.email}")
+                else:
+                    print('No users in the system yet')
+            case '6':
+                print("Thank you for using the User Management System. Goodbye!")
+                break
+            case _:
+                print("Invalid choice. Please try again.")
+
+
+if __name__ == '__main__':
+    main()

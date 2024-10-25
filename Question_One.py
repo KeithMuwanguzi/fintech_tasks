@@ -36,7 +36,7 @@ class Rectangle(Shape):
     def calculate_perimeter(self):
         return 2 * (self.__length + self.__width)
 
-# Demonstrating polymorphism-- ALl the methods will access this method
+# Demonstrating polymorphism-- ALl the shapes will access this method
 def print_shape_info(shape):
     print(f"Area: {shape.calculate_area()}")
     print(f"Perimeter: {shape.calculate_perimeter()}")
